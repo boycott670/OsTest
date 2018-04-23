@@ -14,7 +14,7 @@ final class OsFacade
 
   void createProcess(final String processName, final String processTasks)
   {
-    processes.add(CreateProcessParser.parseCreateProcess(processName, processTasks));
+    processes.add(Process.createProcess(processName, processTasks.split(";")));
   }
 
   void run()
