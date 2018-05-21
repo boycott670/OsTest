@@ -14,4 +14,15 @@ public class OsTest
     osFacade.run();
     assertEquals("<<process1>>op1<<process1>>op2<<process1>>op2<<process1>>op1", osFacade.getExecutionResult());
   }
+
+  @Test
+  public void testExecuteTwoProcess()
+  {
+    OsFacade osFacade = new OsFacade();
+    osFacade.createProcess("process1", "op1;op2;op2;op1");
+    osFacade.createProcess("process2", "op1;op1");
+    osFacade.run();
+    assertEquals("<<process1>>op1<<process1>>op2<<process1>>op2<<process1>>op1<<process2>>op1<<process2>>op1",
+        osFacade.getExecutionResult());
+  }
 }
