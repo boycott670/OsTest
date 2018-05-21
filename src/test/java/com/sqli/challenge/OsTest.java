@@ -25,4 +25,16 @@ public class OsTest
     assertEquals("<<process1>>op1<<process1>>op2<<process1>>op2<<process1>>op1<<process2>>op1<<process2>>op1",
         osFacade.getExecutionResult());
   }
+
+  @Test
+  public void testExecuteTwoProcessWithRoundRobinWithQuantumOne()
+  {
+    OsFacade osFacade = new OsFacade();
+    osFacade.useRoundRobin(1);
+    osFacade.createProcess("process1", "op1;op2;op2;op1");
+    osFacade.createProcess("process2", "op1;op1");
+    osFacade.run();
+    assertEquals("<<process1>>op1<<process2>>op1<<process1>>op2<<process2>>op1<<process1>>op2<<process1>>op1",
+        osFacade.getExecutionResult());
+  }
 }

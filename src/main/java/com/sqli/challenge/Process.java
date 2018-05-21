@@ -19,11 +19,16 @@ final class Process
 
   void run()
   {
+    run(null);
+  }
+  
+  void run(Integer roundRobin)
+  {
     executedInstructions = new ArrayList<>();
 
     String instructionToRun;
 
-    while ((instructionToRun = instructionsToRun.poll()) != null)
+    while ((roundRobin != null ? roundRobin-- > 0 : true) && (instructionToRun = instructionsToRun.poll()) != null)
     {
       executedInstructions.add(instructionToRun);
     }
@@ -34,5 +39,10 @@ final class Process
     return executedInstructions.stream()
         .map(executedInstruction -> String.format("<<%s>>%s", processName, executedInstruction))
         .collect(Collectors.joining());
+  }
+  
+  boolean hasRemainingInstructionsToRun()
+  {
+    return !instructionsToRun.isEmpty();
   }
 }
