@@ -9,6 +9,8 @@ final class OsFacade
   
   private final Collection<Process> processes = new LinkedHashSet<>();
   
+  private String executionResult;
+  
   void createProcess(final String code, final String instructions)
   {
     processes.add(new Process(code, instructions.split(";")));
@@ -16,14 +18,14 @@ final class OsFacade
   
   void run()
   {
+    executionVisitor.reset();
     processes.stream().forEach(process -> process.accept(executionVisitor));
+    executionResult = executionVisitor.executionResult();
   }
   
   String getExecutionResult()
   {
-    final String result = executionVisitor.executionResult();
-    executionVisitor.reset();
-    return result;
+    return executionResult;
   }
   
   void useRoundRobin(final int roundRobin)
