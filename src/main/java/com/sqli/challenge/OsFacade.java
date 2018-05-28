@@ -33,11 +33,7 @@ final class OsFacade
 
   void run()
   {
-    while (processes.values()
-        .stream()
-        .filter(Process::hasRemainingInstructionsToRun)
-        .findAny()
-        .isPresent())
+    while (processes.values().stream().anyMatch(Process::hasRemainingInstructionsToRun))
     {
       processes.values()
           .forEach(process -> process.run(roundRobin));
